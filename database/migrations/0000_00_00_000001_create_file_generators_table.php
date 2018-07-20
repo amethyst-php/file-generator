@@ -23,7 +23,7 @@ class CreateFileGeneratorsTable extends Migration
             $table->text('input')->nullable();
             $table->string('filename');
             $table->string('filetype');
-            $table->text('body');
+            $table->text('body')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
