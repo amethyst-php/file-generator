@@ -9,8 +9,6 @@ class CreateFileGeneratorsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -31,8 +29,6 @@ class CreateFileGeneratorsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

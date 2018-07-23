@@ -23,8 +23,6 @@ class ApiTest extends BaseTest
 
     /**
      * Test common requests.
-     *
-     * @return void
      */
     public function testSuccessCommon()
     {
@@ -39,7 +37,7 @@ class ApiTest extends BaseTest
         $this->assertEquals(1, $result->ok());
         $resource = $result->getResource();
 
-        $response = $this->post($this->getBaseUrl() . "/" . $resource->id . "/generate", ['data' => ['name' => $resource->name]]);
+        $response = $this->post($this->getBaseUrl().'/'.$resource->id.'/generate', ['data' => ['name' => $resource->name]]);
         $response->assertStatus(200);
     }
 }

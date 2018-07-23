@@ -6,13 +6,6 @@ use Illuminate\Support\Facades\File;
 
 abstract class BaseTest extends \Orchestra\Testbench\TestCase
 {
-    protected function getPackageProviders($app)
-    {
-        return [
-            \Railken\LaraOre\FileGeneratorServiceProvider::class,
-        ];
-    }
-
     /**
      * Setup the test environment.
      */
@@ -30,5 +23,12 @@ abstract class BaseTest extends \Orchestra\Testbench\TestCase
         $this->artisan('vendor:publish', ['--provider' => 'Spatie\MediaLibrary\MediaLibraryServiceProvider', '--force'    => true]);
 
         $this->artisan('migrate');
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            \Railken\LaraOre\FileGeneratorServiceProvider::class,
+        ];
     }
 }

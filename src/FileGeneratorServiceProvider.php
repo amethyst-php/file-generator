@@ -2,6 +2,7 @@
 
 namespace Railken\LaraOre;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Railken\LaraOre\Api\Support\Router;
@@ -41,9 +42,11 @@ class FileGeneratorServiceProvider extends ServiceProvider
      */
     public function loadRoutes()
     {
-        if (Config::get('ore.file-generator.http.admin.enabled')) {
-            Router::group(Config::get('ore.file-generator.http.admin.router'), function ($router) {
-                $controller = Config::get('ore.file-generator.http.admin.controller');
+        $config = Config::get('ore.file-generator.http.admin');
+
+        if (Arr::get($config, 'enabled')) {
+            Router::group('admin', Arr::get($config, 'router'), function ($router) use ($config) {
+                $controller = Arr::get($config, 'controller');
 
                 $router->get('/', ['uses' => $controller.'@index']);
                 $router->post('/', ['uses' => $controller.'@create']);

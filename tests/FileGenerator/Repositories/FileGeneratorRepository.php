@@ -2,15 +2,15 @@
 
 namespace Railken\LaraOre\Tests\FileGenerator\Repositories;
 
+use Closure;
+use Illuminate\Support\Collection;
 use Railken\LaraOre\Contracts\RepositoryContract;
 use Railken\LaraOre\FileGenerator\FileGeneratorManager;
-use Illuminate\Support\Collection;
-use Closure;
 
 class FileGeneratorRepository implements RepositoryContract
 {
     protected $manager;
-    
+
     public function __construct()
     {
         $this->manager = new FileGeneratorManager();
@@ -25,10 +25,10 @@ class FileGeneratorRepository implements RepositoryContract
     {
         return $this->manager->newEntity()->getTable();
     }
-    
+
     /**
      * @param Collection $resources
-     * @param \Closure $callback
+     * @param \Closure   $callback
      */
     public function extract(Collection $resources, Closure $callback)
     {
@@ -36,7 +36,7 @@ class FileGeneratorRepository implements RepositoryContract
             $callback($resource, ['record' => $resource]);
         }
     }
-    
+
     /**
      * @param Collection $resources
      *
