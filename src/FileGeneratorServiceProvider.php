@@ -53,7 +53,8 @@ class FileGeneratorServiceProvider extends ServiceProvider
                 $router->put('/{id}', ['uses' => $controller.'@update']);
                 $router->delete('/{id}', ['uses' => $controller.'@remove']);
                 $router->get('/{id}', ['uses' => $controller.'@show']);
-                $router->post('/{id}/generate', ['uses' => $controller.'@generate']);
+                $router->post('/render', ['uses' => $controller.'@render']);
+                $router->post('/{id}/generate', ['uses' => $controller.'@generate'])->where(['id' => '[0-9]+']);
             });
         }
     }

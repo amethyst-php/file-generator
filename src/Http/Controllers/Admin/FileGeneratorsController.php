@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Railken\LaraOre\Api\Http\Controllers\RestConfigurableController;
 use Railken\LaraOre\Api\Http\Controllers\Traits as RestTraits;
+use Railken\LaraOre\Repository\RepositoryManager;
 
 class FileGeneratorsController extends RestConfigurableController
 {
@@ -57,7 +58,7 @@ class FileGeneratorsController extends RestConfigurableController
     ];
 
     /**
-     * Render raw template.
+     * Generate
      *
      * @param int                      $id
      * @param \Illuminate\Http\Request $request
@@ -77,6 +78,40 @@ class FileGeneratorsController extends RestConfigurableController
         }
 
         $result = $manager->generate($report, (array) $request->input('data'));
+
+        if (!$result->ok()) {
+            return $this->error(['errors' => $result->getSimpleErrors()]);
+        }
+
+        return $this->success([]);
+    }
+
+    /**
+     * Render raw template.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function render(Request $request)
+    {
+        /** @var \Railken\LaraOre\FileGenerator\FileGeneratorManager */
+        $manager = $this->manager;
+
+        /** @var \Railken\LaraOre\Repository\Repository */
+        $repository = (new RepositoryManager())->getRepository()->findOneById($request->input('repository_id'));
+
+        if ($repository == null) {
+            return $this->error([['message' => 'invalid repository_id']]);
+        }
+
+        $result = $manager->render(
+            $repository,
+            $request->input('filetype'),
+            $request->input('body'),
+            (array)$request->input('input'),
+            (array)$request->input('data')
+        );
 
         if (!$result->ok()) {
             return $this->error(['errors' => $result->getSimpleErrors()]);
