@@ -95,9 +95,9 @@ class FileGeneratorManager extends ModelManager
     /**
      * Render a file
      *
-     * @param Repository $repository
-     * @param string $filetype
-     * @param string $body
+     * @param Repository    $repository
+     * @param string        $filetype
+     * @param string        $body
      * @param array         $input
      * @param array         $data
      *
@@ -112,6 +112,8 @@ class FileGeneratorManager extends ModelManager
         }
 
         $tm = new TemplateManager();
+
+        $body = $body !== null ? $body : '';
 
         try {
             $query = $repository->newInstanceQuery($data);

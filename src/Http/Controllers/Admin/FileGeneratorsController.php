@@ -119,6 +119,6 @@ class FileGeneratorsController extends RestConfigurableController
             return $this->error(['errors' => $result->getSimpleErrors()]);
         }
 
-        return $this->success([]);
+        return $this->success(['resource' => base64_encode($result->getResource())]);
     }
 }
