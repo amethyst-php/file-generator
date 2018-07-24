@@ -33,6 +33,7 @@ class FileGenerator extends Model implements EntityContract
         'body',
         'repository_id',
         'filetype',
+        'mock_data',
     ];
 
     /**
@@ -41,7 +42,8 @@ class FileGenerator extends Model implements EntityContract
      * @var array
      */
     protected $casts = [
-        'input'     => 'object',
+        'input'         => 'object',
+        'mock_data'     => 'object',
     ];
 
     /**

@@ -36,4 +36,17 @@ class ManagerTest extends BaseTest
         $result = $manager->generate($resource, ['name' => $resource->name]);
         $this->assertEquals(true, $result->ok());
     }
+
+    public function testRender()
+    {
+        $manager = $this->getManager();
+
+        $result = $manager->create(FileGeneratorFaker::make()->parameters()->set('repository.class_name', \Railken\LaraOre\Tests\FileGenerator\Repositories\FileGeneratorRepository::class));
+        $this->assertEquals(1, $result->ok());
+
+        $resource = $result->getResource();
+        $result = $manager->render($resource->repository, "text/html", "{{ name }}", ['name' => 'string|required'], ['name' => 'ban']);
+
+        $this->assertEquals(true, $result->ok());
+    }
 }

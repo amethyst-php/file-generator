@@ -31,6 +31,7 @@ class FileGeneratorFaker extends BaseFaker
         $bag->set('filename', 'users-{{ "now"|date("Ymd") }}');
         $bag->set('filetype', 'text/plain');
         $bag->set('body', 'test');
+        $bag->set('mock_data', ['name' => 'halo']);
 
         return $bag;
     }
