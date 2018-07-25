@@ -5,7 +5,6 @@ namespace Railken\LaraOre\FileGenerator\Attributes\MockData;
 use Railken\Laravel\Manager\Attributes\BaseAttribute;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Tokens;
-use Respect\Validation\Validator as v;
 
 class MockDataAttribute extends BaseAttribute
 {
@@ -55,7 +54,7 @@ class MockDataAttribute extends BaseAttribute
      * Is a value valid ?
      *
      * @param \Railken\Laravel\Manager\Contracts\EntityContract $entity
-     * @param mixed          $value
+     * @param mixed                                             $value
      *
      * @return bool
      */
@@ -63,7 +62,7 @@ class MockDataAttribute extends BaseAttribute
     {
         return true;
     }
-    
+
     /**
      * Retrieve default value.
      *

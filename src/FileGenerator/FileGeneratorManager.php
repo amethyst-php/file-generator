@@ -2,15 +2,15 @@
 
 namespace Railken\LaraOre\FileGenerator;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
+use Railken\LaraOre\Exceptions\FormattingException;
 use Railken\LaraOre\Jobs\GenerateFileGenerator;
+use Railken\LaraOre\Repository\Repository;
+use Railken\LaraOre\Template\TemplateManager;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\Tokens;
-use Railken\LaraOre\Repository\Repository;
-use Railken\LaraOre\Template\TemplateManager;
-use Illuminate\Support\Collection;
-use Railken\LaraOre\Exceptions\FormattingException;
 
 class FileGeneratorManager extends ModelManager
 {
@@ -85,7 +85,7 @@ class FileGeneratorManager extends ModelManager
      */
     public function generate(FileGenerator $generator, array $data = [])
     {
-        $result = $this->validator->input((array)$generator->input, $data);
+        $result = $this->validator->input((array) $generator->input, $data);
 
         dispatch(new GenerateFileGenerator($generator, $data, $this->getAgent()));
 
@@ -93,13 +93,13 @@ class FileGeneratorManager extends ModelManager
     }
 
     /**
-     * Render a file
+     * Render a file.
      *
-     * @param Repository    $repository
-     * @param string        $filetype
-     * @param string        $body
-     * @param array         $input
-     * @param array         $data
+     * @param Repository $repository
+     * @param string     $filetype
+     * @param string     $body
+     * @param array      $input
+     * @param array      $data
      *
      * @return \Railken\Laravel\Manager\Contracts\ResultContract
      */
@@ -119,7 +119,7 @@ class FileGeneratorManager extends ModelManager
             $query = $repository->newInstanceQuery($data);
 
             $resources = $query->get();
-            
+
             $rendered = $tm->renderRaw($filetype, $body, array_merge($data, $repository->parse($resources)));
 
             $result->setResources(new Collection($rendered));
@@ -131,7 +131,6 @@ class FileGeneratorManager extends ModelManager
 
             $result->addErrors(new Collection([$e]));
         }
-
 
         return $result;
     }

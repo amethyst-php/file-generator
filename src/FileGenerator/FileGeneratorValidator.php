@@ -2,15 +2,14 @@
 
 namespace Railken\LaraOre\FileGenerator;
 
-use Railken\Laravel\Manager\ModelValidator;
 use Illuminate\Support\Facades\Validator;
+use Railken\Laravel\Manager\ModelValidator;
 use Railken\Laravel\Manager\Result;
 
 class FileGeneratorValidator extends ModelValidator
 {
-
     /**
-     * Validate input submitted
+     * Validate input submitted.
      *
      * @param array $schema
      * @param array $data

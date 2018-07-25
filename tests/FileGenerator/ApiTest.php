@@ -41,7 +41,6 @@ class ApiTest extends BaseTest
         $response->assertStatus(200);
     }
 
-
     public function testRender()
     {
         $manager = new FileGeneratorManager();
@@ -53,10 +52,10 @@ class ApiTest extends BaseTest
 
         $response = $this->post($this->getBaseUrl().'/render', [
             'repository_id' => $resource->repository->id,
-            'filetype' => 'text/html',
-            'body' => "{{ name }}",
-            'input' => ['name' => 'string|required'],
-            'data' => ['name' => 'ban']
+            'filetype'      => 'text/html',
+            'body'          => '{{ name }}',
+            'input'         => ['name' => 'string|required'],
+            'data'          => ['name' => 'ban'],
         ]);
         $response->assertStatus(200);
     }

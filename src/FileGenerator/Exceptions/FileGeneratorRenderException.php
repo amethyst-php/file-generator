@@ -14,7 +14,7 @@ class FileGeneratorRenderException extends FileGeneratorException
     /**
      * Construct.
      *
-     * @param mixed  $message
+     * @param mixed $message
      */
     public function __construct($message = null)
     {

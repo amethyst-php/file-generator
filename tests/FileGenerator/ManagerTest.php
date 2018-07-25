@@ -45,7 +45,7 @@ class ManagerTest extends BaseTest
         $this->assertEquals(1, $result->ok());
 
         $resource = $result->getResource();
-        $result = $manager->render($resource->repository, "text/html", "{{ name }}", ['name' => 'string|required'], ['name' => 'ban']);
+        $result = $manager->render($resource->repository, 'text/html', '{{ name }}', ['name' => 'string|required'], ['name' => 'ban']);
 
         $this->assertEquals(true, $result->ok());
     }

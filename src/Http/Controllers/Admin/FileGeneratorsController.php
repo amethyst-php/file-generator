@@ -60,7 +60,7 @@ class FileGeneratorsController extends RestConfigurableController
     ];
 
     /**
-     * Generate
+     * Generate.
      *
      * @param int                      $id
      * @param \Illuminate\Http\Request $request
@@ -111,8 +111,8 @@ class FileGeneratorsController extends RestConfigurableController
             $repository,
             $request->input('filetype'),
             $request->input('body'),
-            (array)$request->input('input'),
-            (array)$request->input('data')
+            (array) $request->input('input'),
+            (array) $request->input('data')
         );
 
         if (!$result->ok()) {
