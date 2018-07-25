@@ -5,11 +5,13 @@ namespace Railken\LaraOre\FileGenerator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 use Railken\LaraOre\DataBuilder\DataBuilder;
+use Railken\LaraOre\DataBuilder\DataBuilderManager;
 use Railken\LaraOre\Exceptions\FormattingException;
 use Railken\LaraOre\Jobs\GenerateFileGenerator;
 use Railken\LaraOre\Template\TemplateManager;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\ModelManager;
+use Railken\Laravel\Manager\Result;
 use Railken\Laravel\Manager\Tokens;
 
 class FileGeneratorManager extends ModelManager
@@ -83,7 +85,8 @@ class FileGeneratorManager extends ModelManager
      */
     public function generate(FileGenerator $generator, array $data = [])
     {
-        $result = $this->validator->input((array) $generator->data_builder->input, $data);
+        $result = new Result();
+        $result->addErrors((new DataBuilderManager())->getValidator()->raw((array) $generator->data_builder->input, $data));
 
         dispatch(new GenerateFileGenerator($generator, $data, $this->getAgent()));
 
@@ -105,7 +108,8 @@ class FileGeneratorManager extends ModelManager
         $repository = $data_builder->repository;
         $input = $data_builder->input;
 
-        $result = $this->validator->input((array) $input, $data);
+        $result = new Result();
+        $result->addErrors((new DataBuilderManager())->getValidator()->raw((array) $input, $data));
 
         if (!$result->ok()) {
             return $result;

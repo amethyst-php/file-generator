@@ -9,9 +9,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Railken\LaraOre\Events\FileGeneratorFailed;
 use Railken\LaraOre\Events\FileGeneratorGenerated;
-use Railken\LaraOre\Exceptions\FormattingException;
 use Railken\LaraOre\File\FileManager;
 use Railken\LaraOre\FileGenerator\FileGenerator;
+use Railken\LaraOre\FileGenerator\FileGeneratorManager;
 use Railken\LaraOre\Template\TemplateManager;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 
@@ -45,33 +45,24 @@ class GenerateFileGenerator implements ShouldQueue
         $generator = $this->generator;
         $data = $this->data;
 
+        $fgm = new FileGeneratorManager();
+        $fm = new FileManager();
         $tm = new TemplateManager();
 
-        $data_builder = $generator->data_builder;
-        $repository = $data_builder->repository;
+        $filename = sys_get_temp_dir().'/'.$tm->renderRaw('text/plain', $generator->filename, $data);
 
-        try {
-            $query = $repository->newInstanceQuery($data);
+        $file = fopen($filename, 'w');
 
-            $filename = sys_get_temp_dir().'/'.$tm->renderRaw('text/plain', $generator->filename, $data);
-
-            $file = fopen($filename, 'w');
-
-            if (!$file) {
-                throw new \Exception();
-            }
-
-            $resources = $query->get();
-            fwrite($file, $tm->renderRaw($generator->filetype, $generator->body, array_merge($data, $repository->parse($resources))));
-        } catch (FormattingException | \PDOException | \Railken\SQ\Exceptions\QuerySyntaxException $e) {
-            return event(new FileGeneratorFailed($generator, $e, $this->agent));
-        } catch (\Twig_Error $e) {
-            $e = new \Exception($e->getRawMessage().' on line '.$e->getTemplateLine());
-
-            return event(new FileGeneratorFailed($generator, $e, $this->agent));
+        if (!$file) {
+            throw new \Exception();
         }
 
-        $fm = new FileManager();
+        $result = $fgm->render($generator->data_builder, $generator->filetype, $generator->body, $data);
+
+        if (!$result->ok()) {
+            return event(new FileGeneratorFailed($generator, $result->getErrors()[0], $this->agent));
+        }
+
         fclose($file);
 
         $result = $fm->create([]);
