@@ -117,14 +117,12 @@ class FileGeneratorManager extends ModelManager
 
         $tm = new TemplateManager();
 
-        $body = $body !== null ? $body : '';
-
         try {
             $query = $repository->newInstanceQuery($data);
 
             $resources = $query->get();
 
-            $rendered = $tm->renderRaw($filetype, $body, array_merge($data, $repository->parse($resources)));
+            $rendered = $tm->renderRaw($filetype, strval($body), array_merge($data, $repository->parse($resources)));
 
             $result->setResources(new Collection($rendered));
         } catch (FormattingException | \PDOException | \Railken\SQ\Exceptions\QuerySyntaxException $e) {
