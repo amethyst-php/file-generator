@@ -16,10 +16,8 @@ class CreateFileGeneratorsTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->text('description')->nullable();
-            $table->text('mock_data')->nullable();
-            $table->integer('repository_id')->unsigned()->nullable();
-            $table->foreign('repository_id')->references('id')->on(Config::get('ore.repository.table'));
-            $table->text('input')->nullable();
+            $table->integer('data_builder_id')->unsigned()->nullable();
+            $table->foreign('data_builder_id')->references('id')->on(Config::get('ore.data-builder.table'));
             $table->string('filename');
             $table->string('filetype');
             $table->text('body')->nullable();

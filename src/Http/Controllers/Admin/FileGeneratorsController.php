@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Railken\LaraOre\Api\Http\Controllers\RestConfigurableController;
 use Railken\LaraOre\Api\Http\Controllers\Traits as RestTraits;
-use Railken\LaraOre\Repository\RepositoryManager;
+use Railken\LaraOre\DataBuilder\DataBuilderManager;
 
 class FileGeneratorsController extends RestConfigurableController
 {
@@ -32,9 +32,7 @@ class FileGeneratorsController extends RestConfigurableController
         'id',
         'name',
         'description',
-        'repository_id',
-        'input',
-        'mock_data',
+        'data_builder_id',
         'filename',
         'filetype',
         'body',
@@ -50,10 +48,8 @@ class FileGeneratorsController extends RestConfigurableController
     public $fillable = [
         'name',
         'description',
-        'repository',
-        'repository_id',
-        'input',
-        'mock_data',
+        'data_builder',
+        'data_builder_id',
         'filename',
         'filetype',
         'body',
@@ -100,18 +96,17 @@ class FileGeneratorsController extends RestConfigurableController
         /** @var \Railken\LaraOre\FileGenerator\FileGeneratorManager */
         $manager = $this->manager;
 
-        /** @var \Railken\LaraOre\Repository\Repository */
-        $repository = (new RepositoryManager())->getRepository()->findOneById($request->input('repository_id'));
+        /** @var \Railken\LaraOre\DataBuilder\DataBuilder */
+        $data_builder = (new DataBuilderManager())->getRepository()->findOneById(intval($request->input('data_builder_id')));
 
-        if ($repository == null) {
-            return $this->error([['message' => 'invalid repository_id']]);
+        if ($data_builder == null) {
+            return $this->error([['message' => 'invalid data_builder_id']]);
         }
 
         $result = $manager->render(
-            $repository,
-            $request->input('filetype'),
-            $request->input('body'),
-            (array) $request->input('input'),
+            $data_builder,
+            strval($request->input('filetype')),
+            strval($request->input('body')),
             (array) $request->input('data')
         );
 

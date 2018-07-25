@@ -1,24 +1,24 @@
 <?php
 
-namespace Railken\LaraOre\FileGenerator\Attributes\MockData\Exceptions;
+namespace Railken\LaraOre\FileGenerator\Attributes\DataBuilderId\Exceptions;
 
 use Railken\LaraOre\FileGenerator\Exceptions\FileGeneratorAttributeException;
 
-class FileGeneratorMockDataNotAuthorizedException extends FileGeneratorAttributeException
+class FileGeneratorDataBuilderIdNotAuthorizedException extends FileGeneratorAttributeException
 {
     /**
      * The reason (attribute) for which this exception is thrown.
      *
      * @var string
      */
-    protected $attribute = 'mock_data';
+    protected $attribute = 'data_builder_id';
 
     /**
      * The code to identify the error.
      *
      * @var string
      */
-    protected $code = 'FILEGENERATOR_MOCK_DATA_NOT_AUTHTORIZED';
+    protected $code = 'FILEGENERATOR_DATA_BUILDER_ID_NOT_AUTHTORIZED';
 
     /**
      * The message.

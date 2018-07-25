@@ -1,19 +1,19 @@
 <?php
 
-namespace Railken\LaraOre\FileGenerator\Attributes\RepositoryId;
+namespace Railken\LaraOre\FileGenerator\Attributes\DataBuilderId;
 
 use Railken\Laravel\Manager\Attributes\BelongsToAttribute;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Tokens;
 
-class RepositoryIdAttribute extends BelongsToAttribute
+class DataBuilderIdAttribute extends BelongsToAttribute
 {
     /**
      * Name attribute.
      *
      * @var string
      */
-    protected $name = 'repository_id';
+    protected $name = 'data_builder_id';
 
     /**
      * Is the attribute required
@@ -36,18 +36,18 @@ class RepositoryIdAttribute extends BelongsToAttribute
      * @var array
      */
     protected $exceptions = [
-        Tokens::NOT_DEFINED    => Exceptions\FileGeneratorRepositoryIdNotDefinedException::class,
-        Tokens::NOT_VALID      => Exceptions\FileGeneratorRepositoryIdNotValidException::class,
-        Tokens::NOT_AUTHORIZED => Exceptions\FileGeneratorRepositoryIdNotAuthorizedException::class,
-        Tokens::NOT_UNIQUE     => Exceptions\FileGeneratorRepositoryIdNotUniqueException::class,
+        Tokens::NOT_DEFINED    => Exceptions\FileGeneratorDataBuilderIdNotDefinedException::class,
+        Tokens::NOT_VALID      => Exceptions\FileGeneratorDataBuilderIdNotValidException::class,
+        Tokens::NOT_AUTHORIZED => Exceptions\FileGeneratorDataBuilderIdNotAuthorizedException::class,
+        Tokens::NOT_UNIQUE     => Exceptions\FileGeneratorDataBuilderIdNotUniqueException::class,
     ];
 
     /**
      * List of all permissions.
      */
     protected $permissions = [
-        Tokens::PERMISSION_FILL => 'file-generator.attributes.repository_id.fill',
-        Tokens::PERMISSION_SHOW => 'file-generator.attributes.repository_id.show',
+        Tokens::PERMISSION_FILL => 'filegenerator.attributes.data_builder_id.fill',
+        Tokens::PERMISSION_SHOW => 'filegenerator.attributes.data_builder_id.show',
     ];
 
     /**
@@ -57,7 +57,7 @@ class RepositoryIdAttribute extends BelongsToAttribute
      */
     public function getRelationName()
     {
-        return 'repository';
+        return 'data_builder';
     }
 
     /**
@@ -69,7 +69,7 @@ class RepositoryIdAttribute extends BelongsToAttribute
      */
     public function getRelationBuilder(EntityContract $entity)
     {
-        return $entity->repository();
+        return $entity->data_builder();
     }
 
     /**
@@ -81,6 +81,6 @@ class RepositoryIdAttribute extends BelongsToAttribute
      */
     public function getRelationManager(EntityContract $entity)
     {
-        return new \Railken\LaraOre\Repository\RepositoryManager($this->getManager()->getAgent());
+        return new \Railken\LaraOre\DataBuilder\DataBuilderManager($this->getManager()->getAgent());
     }
 }

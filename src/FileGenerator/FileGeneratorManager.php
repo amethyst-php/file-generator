@@ -4,9 +4,9 @@ namespace Railken\LaraOre\FileGenerator;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
+use Railken\LaraOre\DataBuilder\DataBuilder;
 use Railken\LaraOre\Exceptions\FormattingException;
 use Railken\LaraOre\Jobs\GenerateFileGenerator;
-use Railken\LaraOre\Repository\Repository;
 use Railken\LaraOre\Template\TemplateManager;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\ModelManager;
@@ -29,16 +29,14 @@ class FileGeneratorManager extends ModelManager
     protected $attributes = [
         Attributes\Id\IdAttribute::class,
         Attributes\Name\NameAttribute::class,
+        Attributes\Description\DescriptionAttribute::class,
+        Attributes\Filename\FilenameAttribute::class,
+        Attributes\Body\BodyAttribute::class,
+        Attributes\Filetype\FiletypeAttribute::class,
+        Attributes\DataBuilderId\DataBuilderIdAttribute::class,
         Attributes\CreatedAt\CreatedAtAttribute::class,
         Attributes\UpdatedAt\UpdatedAtAttribute::class,
         Attributes\DeletedAt\DeletedAtAttribute::class,
-        Attributes\Input\InputAttribute::class,
-        Attributes\Filename\FilenameAttribute::class,
-        Attributes\Body\BodyAttribute::class,
-        Attributes\RepositoryId\RepositoryIdAttribute::class,
-        Attributes\Description\DescriptionAttribute::class,
-        Attributes\Filetype\FiletypeAttribute::class,
-        Attributes\MockData\MockDataAttribute::class,
     ];
 
     /**
@@ -85,7 +83,7 @@ class FileGeneratorManager extends ModelManager
      */
     public function generate(FileGenerator $generator, array $data = [])
     {
-        $result = $this->validator->input((array) $generator->input, $data);
+        $result = $this->validator->input((array) $generator->data_builder->input, $data);
 
         dispatch(new GenerateFileGenerator($generator, $data, $this->getAgent()));
 
@@ -95,17 +93,19 @@ class FileGeneratorManager extends ModelManager
     /**
      * Render a file.
      *
-     * @param Repository $repository
-     * @param string     $filetype
-     * @param string     $body
-     * @param array      $input
-     * @param array      $data
+     * @param DataBuilder $data_builder
+     * @param string      $filetype
+     * @param string      $body
+     * @param array       $data
      *
      * @return \Railken\Laravel\Manager\Contracts\ResultContract
      */
-    public function render(Repository $repository, string $filetype, string $body, array $input = [], array $data = [])
+    public function render(DataBuilder $data_builder, string $filetype, string $body, array $data = [])
     {
-        $result = $this->validator->input($input, $data);
+        $repository = $data_builder->repository;
+        $input = $data_builder->input;
+
+        $result = $this->validator->input((array) $input, $data);
 
         if (!$result->ok()) {
             return $result;

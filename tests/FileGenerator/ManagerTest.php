@@ -29,7 +29,7 @@ class ManagerTest extends BaseTest
     {
         $manager = $this->getManager();
 
-        $result = $manager->create(FileGeneratorFaker::make()->parameters()->set('repository.class_name', \Railken\LaraOre\Tests\FileGenerator\Repositories\FileGeneratorRepository::class));
+        $result = $manager->create(FileGeneratorFaker::make()->parameters()->set('data_builder.repository.class_name', \Railken\LaraOre\Tests\FileGenerator\Repositories\FileGeneratorRepository::class));
         $this->assertEquals(1, $result->ok());
 
         $resource = $result->getResource();
@@ -41,11 +41,11 @@ class ManagerTest extends BaseTest
     {
         $manager = $this->getManager();
 
-        $result = $manager->create(FileGeneratorFaker::make()->parameters()->set('repository.class_name', \Railken\LaraOre\Tests\FileGenerator\Repositories\FileGeneratorRepository::class));
+        $result = $manager->create(FileGeneratorFaker::make()->parameters()->set('data_builder.repository.class_name', \Railken\LaraOre\Tests\FileGenerator\Repositories\FileGeneratorRepository::class));
         $this->assertEquals(1, $result->ok());
 
         $resource = $result->getResource();
-        $result = $manager->render($resource->repository, 'text/html', '{{ name }}', ['name' => 'string|required'], ['name' => 'ban']);
+        $result = $manager->render($resource->data_builder, 'text/html', '{{ name }}', ['name' => 'ban']);
 
         $this->assertEquals(true, $result->ok());
     }

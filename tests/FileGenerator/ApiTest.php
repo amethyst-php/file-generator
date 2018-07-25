@@ -33,7 +33,7 @@ class ApiTest extends BaseTest
     {
         $manager = new FileGeneratorManager();
 
-        $result = $manager->create(FileGeneratorFaker::make()->parameters()->set('repository.class_name', \Railken\LaraOre\Tests\FileGenerator\Repositories\FileGeneratorRepository::class));
+        $result = $manager->create(FileGeneratorFaker::make()->parameters()->set('data_builder.repository.class_name', \Railken\LaraOre\Tests\FileGenerator\Repositories\FileGeneratorRepository::class));
         $this->assertEquals(1, $result->ok());
         $resource = $result->getResource();
 
@@ -45,17 +45,16 @@ class ApiTest extends BaseTest
     {
         $manager = new FileGeneratorManager();
 
-        $result = $manager->create(FileGeneratorFaker::make()->parameters()->set('repository.class_name', \Railken\LaraOre\Tests\FileGenerator\Repositories\FileGeneratorRepository::class));
+        $result = $manager->create(FileGeneratorFaker::make()->parameters()->set('data_builder.repository.class_name', \Railken\LaraOre\Tests\FileGenerator\Repositories\FileGeneratorRepository::class));
         $this->assertEquals(1, $result->ok());
 
         $resource = $result->getResource();
 
         $response = $this->post($this->getBaseUrl().'/render', [
-            'repository_id' => $resource->repository->id,
-            'filetype'      => 'text/html',
-            'body'          => '{{ name }}',
-            'input'         => ['name' => 'string|required'],
-            'data'          => ['name' => 'ban'],
+            'data_builder_id' => $resource->data_builder->id,
+            'filetype'        => 'text/html',
+            'body'            => '{{ name }}',
+            'data'            => ['name' => 'ban'],
         ]);
         $response->assertStatus(200);
     }

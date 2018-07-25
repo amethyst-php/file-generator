@@ -34,6 +34,7 @@ class FileGeneratorServiceProvider extends ServiceProvider
         $this->app->register(\Railken\LaraOre\ApiServiceProvider::class);
         $this->app->register(\Railken\LaraOre\FileServiceProvider::class);
         $this->app->register(\Railken\LaraOre\RepositoryServiceProvider::class);
+        $this->app->register(\Railken\LaraOre\DataBuilderServiceProvider::class);
         $this->mergeConfigFrom(__DIR__.'/../config/ore.file-generator.php', 'ore.file-generator');
     }
 

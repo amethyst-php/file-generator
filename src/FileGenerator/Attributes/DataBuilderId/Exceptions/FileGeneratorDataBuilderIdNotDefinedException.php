@@ -1,24 +1,24 @@
 <?php
 
-namespace Railken\LaraOre\FileGenerator\Attributes\Input\Exceptions;
+namespace Railken\LaraOre\FileGenerator\Attributes\DataBuilderId\Exceptions;
 
 use Railken\LaraOre\FileGenerator\Exceptions\FileGeneratorAttributeException;
 
-class FileGeneratorInputNotDefinedException extends FileGeneratorAttributeException
+class FileGeneratorDataBuilderIdNotDefinedException extends FileGeneratorAttributeException
 {
     /**
      * The reason (attribute) for which this exception is thrown.
      *
      * @var string
      */
-    protected $attribute = 'input';
+    protected $attribute = 'data_builder_id';
 
     /**
      * The code to identify the error.
      *
      * @var string
      */
-    protected $code = 'FILEGENERATOR_INPUT_NOT_DEFINED';
+    protected $code = 'FILEGENERATOR_DATA_BUILDER_ID_NOT_DEFINED';
 
     /**
      * The message.

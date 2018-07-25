@@ -47,7 +47,8 @@ class GenerateFileGenerator implements ShouldQueue
 
         $tm = new TemplateManager();
 
-        $repository = $generator->repository;
+        $data_builder = $generator->data_builder;
+        $repository = $data_builder->repository;
 
         try {
             $query = $repository->newInstanceQuery($data);

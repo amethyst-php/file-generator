@@ -1,29 +1,29 @@
 <?php
 
-namespace Railken\LaraOre\FileGenerator\Attributes\RepositoryId\Exceptions;
+namespace Railken\LaraOre\FileGenerator\Attributes\DataBuilderId\Exceptions;
 
 use Railken\LaraOre\FileGenerator\Exceptions\FileGeneratorAttributeException;
 
-class FileGeneratorRepositoryIdNotDefinedException extends FileGeneratorAttributeException
+class FileGeneratorDataBuilderIdNotValidException extends FileGeneratorAttributeException
 {
     /**
      * The reason (attribute) for which this exception is thrown.
      *
      * @var string
      */
-    protected $attribute = 'repository_id';
+    protected $attribute = 'data_builder_id';
 
     /**
      * The code to identify the error.
      *
      * @var string
      */
-    protected $code = 'FILEGENERATOR_REPOSITORY_ID_NOT_DEFINED';
+    protected $code = 'FILEGENERATOR_DATA_BUILDER_ID_NOT_VALID';
 
     /**
      * The message.
      *
      * @var string
      */
-    protected $message = 'The %s is required';
+    protected $message = 'The %s is not valid';
 }

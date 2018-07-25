@@ -5,15 +5,14 @@ namespace Railken\LaraOre\FileGenerator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Config;
-use Railken\LaraOre\Repository\Repository;
+use Railken\LaraOre\DataBuilder\DataBuilder;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 
 /**
- * @property string     $name
- * @property Repository $repository
- * @property string     $input
- * @property string     $body
- * @property string     $filename
+ * @property string      $name
+ * @property DataBuilder $data_builder
+ * @property string      $body
+ * @property string      $filename
  */
 class FileGenerator extends Model implements EntityContract
 {
@@ -26,24 +25,9 @@ class FileGenerator extends Model implements EntityContract
      */
     protected $fillable = [
         'name',
-        'repository',
-        'filter',
-        'input',
+        'filetype',
         'filename',
         'body',
-        'repository_id',
-        'filetype',
-        'mock_data',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'input'         => 'object',
-        'mock_data'     => 'object',
     ];
 
     /**
@@ -68,8 +52,8 @@ class FileGenerator extends Model implements EntityContract
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function repository()
+    public function data_builder()
     {
-        return $this->belongsTo(Repository::class);
+        return $this->belongsTo(DataBuilder::class);
     }
 }
