@@ -1,21 +1,23 @@
 <?php
 
-namespace Railken\LaraOre\Jobs;
+namespace Railken\LaraOre\Jobs\FileGenerator;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Railken\LaraOre\Events\FileGeneratorFailed;
-use Railken\LaraOre\Events\FileGeneratorGenerated;
+use Railken\Bag;
+use Railken\LaraOre\DataBuilder\DataBuilderManager;
+use Railken\LaraOre\Events\FileGenerator\FileFailed;
+use Railken\LaraOre\Events\FileGenerator\FileGenerated;
 use Railken\LaraOre\File\FileManager;
 use Railken\LaraOre\FileGenerator\FileGenerator;
 use Railken\LaraOre\FileGenerator\FileGeneratorManager;
 use Railken\LaraOre\Template\TemplateManager;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 
-class GenerateFileGenerator implements ShouldQueue
+class GenerateFile implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -48,34 +50,39 @@ class GenerateFileGenerator implements ShouldQueue
         $fgm = new FileGeneratorManager();
         $fm = new FileManager();
         $tm = new TemplateManager();
+        $dbm = new DataBuilderManager();
 
-        $filename = sys_get_temp_dir().'/'.$tm->renderRaw('text/plain', $generator->filename, $data);
-
-        $file = fopen($filename, 'w');
-
-        if (!$file) {
-            throw new \Exception();
-        }
-
-        $result = $fgm->render($generator->data_builder, $generator->filetype, $generator->body, $data);
+        $result = $dbm->build($generator->data_builder, $data);
 
         if (!$result->ok()) {
-            return event(new FileGeneratorFailed($generator, $result->getErrors()[0], $this->agent));
+            return event(new FileFailed($generator, $result->getErrors()[0], $this->agent));
         }
 
-        fclose($file);
+        $data = $result->getResource();
+        $result = $fgm->render($generator->data_builder, $generator->filetype, [
+            'body'         => $generator->bod,
+            'filename'     => sys_get_temp_dir().'/'.$generator->filename,
+        ], $data);
+
+        if (!$result->ok()) {
+            return event(new FileFailed($generator, $result->getErrors()[0], $this->agent));
+        }
+
+        $bag = new Bag($result->getResource());
+
+        file_put_contents($bag->get('filename'), $bag->get('body'));
 
         $result = $fm->create([]);
         $resource = $result->getResource();
 
         $resource
-            ->addMedia($filename)
+            ->addMedia($bag->get('filename'))
             ->addCustomHeaders([
-                'ContentDisposition' => 'attachment; filename='.basename($filename).'',
+                'ContentDisposition' => 'attachment; filename='.basename($bag->get('filename')).'',
                 'ContentType'        => 'text/csv',
             ])
             ->toMediaCollection('file');
 
-        event(new FileGeneratorGenerated($generator, $result->getResource(), $this->agent));
+        event(new FileGenerated($generator, $result->getResource(), $this->agent));
     }
 }

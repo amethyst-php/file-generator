@@ -4,10 +4,10 @@ namespace Railken\LaraOre\FileGenerator;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
+use Railken\Bag;
 use Railken\LaraOre\DataBuilder\DataBuilder;
 use Railken\LaraOre\DataBuilder\DataBuilderManager;
-use Railken\LaraOre\Exceptions\FormattingException;
-use Railken\LaraOre\Jobs\GenerateFileGenerator;
+use Railken\LaraOre\Jobs\FileGenerator\GenerateFile;
 use Railken\LaraOre\Template\TemplateManager;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\ModelManager;
@@ -85,10 +85,13 @@ class FileGeneratorManager extends ModelManager
      */
     public function generate(FileGenerator $generator, array $data = [])
     {
-        $result = new Result();
-        $result->addErrors((new DataBuilderManager())->getValidator()->raw((array) $generator->data_builder->input, $data));
+        $result = (new DataBuilderManager())->validateRaw($generator->data_builder, $data);
 
-        dispatch(new GenerateFileGenerator($generator, $data, $this->getAgent()));
+        if (!$result->ok()) {
+            return $result;
+        }
+
+        dispatch(new GenerateFile($generator, $data, $this->getAgent()));
 
         return $result;
     }
@@ -98,36 +101,25 @@ class FileGeneratorManager extends ModelManager
      *
      * @param DataBuilder $data_builder
      * @param string      $filetype
-     * @param string      $body
+     * @param array       $parameters
      * @param array       $data
      *
      * @return \Railken\Laravel\Manager\Contracts\ResultContract
      */
-    public function render(DataBuilder $data_builder, string $filetype, string $body, array $data = [])
+    public function render(DataBuilder $data_builder, string $filetype, array $parameters, array $data = [])
     {
-        $repository = $data_builder->repository;
-        $input = $data_builder->input;
-
-        $result = new Result();
-        $result->addErrors((new DataBuilderManager())->getValidator()->raw((array) $input, $data));
-
-        if (!$result->ok()) {
-            return $result;
-        }
+        $parameters = $this->castParameters($parameters);
 
         $tm = new TemplateManager();
 
+        $result = new Result();
+
         try {
-            $query = $repository->newInstanceQuery($data);
+            $bag = new Bag($parameters);
 
-            $resources = $query->get();
+            $bag->set('body', $tm->renderRaw($filetype, strval($bag->get('body')), $data));
 
-            $rendered = $tm->renderRaw($filetype, strval($body), array_merge($data, $repository->parse($resources)));
-
-            $result->setResources(new Collection($rendered));
-        } catch (FormattingException | \PDOException | \Railken\SQ\Exceptions\QuerySyntaxException $e) {
-            $e = new Exceptions\FileGeneratorRenderException($e->getMessage());
-            $result->addErrors(new Collection([$e]));
+            $result->setResources(new Collection([$bag->toArray()]));
         } catch (\Twig_Error $e) {
             $e = new Exceptions\FileGeneratorRenderException($e->getRawMessage().' on line '.$e->getTemplateLine());
 

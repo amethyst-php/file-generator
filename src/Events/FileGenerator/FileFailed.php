@@ -1,13 +1,13 @@
 <?php
 
-namespace Railken\LaraOre\Events;
+namespace Railken\LaraOre\Events\FileGenerator;
 
 use Exception;
 use Illuminate\Queue\SerializesModels;
 use Railken\LaraOre\FileGenerator\FileGenerator;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 
-class FileGeneratorFailed
+class FileFailed
 {
     use SerializesModels;
 

@@ -2,6 +2,7 @@
 
 namespace Railken\LaraOre\Tests\FileGenerator;
 
+use Railken\LaraOre\DataBuilder\DataBuilderManager;
 use Railken\LaraOre\FileGenerator\FileGeneratorFaker;
 use Railken\LaraOre\FileGenerator\FileGeneratorManager;
 use Railken\LaraOre\Support\Testing\ManagerTestableTrait;
@@ -45,7 +46,9 @@ class ManagerTest extends BaseTest
         $this->assertEquals(1, $result->ok());
 
         $resource = $result->getResource();
-        $result = $manager->render($resource->data_builder, 'text/html', '{{ name }}', ['name' => 'ban']);
+        $result = $manager->render($resource->data_builder, 'text/html', [
+            'body' => '{{ name }}',
+        ], (new DataBuilderManager())->build($resource->data_builder, ['name' => 'ban'])->getResource());
 
         $this->assertEquals(true, $result->ok());
     }

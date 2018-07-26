@@ -38,7 +38,7 @@ class ApiTest extends BaseTest
         $resource = $result->getResource();
 
         $response = $this->post($this->getBaseUrl().'/'.$resource->id.'/generate', ['data' => ['name' => $resource->name]]);
-        $response->assertStatus(200);
+        $this->assertOrPrint($response, 200);
     }
 
     public function testRender()
@@ -56,6 +56,6 @@ class ApiTest extends BaseTest
             'body'            => '{{ name }}',
             'data'            => ['name' => 'ban'],
         ]);
-        $response->assertStatus(200);
+        $this->assertOrPrint($response, 200);
     }
 }

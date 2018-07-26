@@ -69,13 +69,13 @@ class FileGeneratorsController extends RestConfigurableController
         $manager = $this->manager;
 
         /** @var \Railken\LaraOre\FileGenerator\FileGenerator */
-        $report = $manager->getRepository()->findOneById($id);
+        $generator = $manager->getRepository()->findOneById($id);
 
-        if ($report == null) {
+        if ($generator == null) {
             return $this->not_found();
         }
 
-        $result = $manager->generate($report, (array) $request->input('data'));
+        $result = $manager->generate($generator, (array) $request->input('data'));
 
         if (!$result->ok()) {
             return $this->error(['errors' => $result->getSimpleErrors()]);
@@ -106,7 +106,10 @@ class FileGeneratorsController extends RestConfigurableController
         $result = $manager->render(
             $data_builder,
             strval($request->input('filetype')),
-            strval($request->input('body')),
+            [
+                'body'     => strval($request->input('body')),
+                'filename' => strval($request->input('filename')),
+            ],
             (array) $request->input('data')
         );
 
@@ -114,6 +117,11 @@ class FileGeneratorsController extends RestConfigurableController
             return $this->error(['errors' => $result->getSimpleErrors()]);
         }
 
-        return $this->success(['resource' => base64_encode($result->getResource())]);
+        $resource = $result->getResource();
+
+        return $this->success(['resource' => [
+            'body'     => base64_encode($resource['body']),
+            'filename' => base64_encode($resource['filename']),
+        ]]);
     }
 }
