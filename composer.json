@@ -1,6 +1,7 @@
 {
     "name": "railken/lara-ore-file-generator",
     "keywords": ["laravel", "lara-ore", "lara-ore-file-generator", "file-generator"],
+    "description": "A lara-ore package",
     "license": "MIT",
     "require": {
         "php": ">=7.1",
