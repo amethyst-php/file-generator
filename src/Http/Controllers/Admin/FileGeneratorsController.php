@@ -96,12 +96,24 @@ class FileGeneratorsController extends RestConfigurableController
         /** @var \Railken\LaraOre\FileGenerator\FileGeneratorManager */
         $manager = $this->manager;
 
+        $dbm = new DataBuilderManager();
+
         /** @var \Railken\LaraOre\DataBuilder\DataBuilder */
-        $data_builder = (new DataBuilderManager())->getRepository()->findOneById(intval($request->input('data_builder_id')));
+        $data_builder = $dbm->getRepository()->findOneById(intval($request->input('data_builder_id')));
 
         if ($data_builder == null) {
             return $this->error([['message' => 'invalid data_builder_id']]);
         }
+
+        $data = (array) $request->input('data', null);
+
+        $result = $dbm->build($data_builder, $data);
+
+        if (!$result) {
+            return $this->error(['errors' => $result->getSimpleErrors()]);
+        }
+        
+        $data = array_merge($data, $result->getResource());
 
         $result = $manager->render(
             $data_builder,
@@ -110,7 +122,7 @@ class FileGeneratorsController extends RestConfigurableController
                 'body'     => strval($request->input('body')),
                 'filename' => strval($request->input('filename')),
             ],
-            (array) $request->input('data')
+            $data
         );
 
         if (!$result->ok()) {
