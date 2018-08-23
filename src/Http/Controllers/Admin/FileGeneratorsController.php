@@ -109,10 +109,10 @@ class FileGeneratorsController extends RestConfigurableController
 
         $result = $dbm->build($data_builder, $data);
 
-        if (!$result) {
+        if (!$result->ok()) {
             return $this->error(['errors' => $result->getSimpleErrors()]);
         }
-        
+
         $data = array_merge($data, $result->getResource());
 
         $result = $manager->render(
