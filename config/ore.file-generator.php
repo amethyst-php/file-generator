@@ -107,7 +107,7 @@ return [
             'enabled'    => true,
             'controller' => Railken\LaraOre\Http\Controllers\Admin\FileGeneratorsController::class,
             'router'     => [
-                'prefix' => '/admin/file-generators',
+                'prefix' => '/file-generators',
             ],
         ],
     ],

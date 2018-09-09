@@ -3,13 +3,13 @@
 namespace Railken\LaraOre\Tests\FileGenerator;
 
 use Illuminate\Support\Facades\Config;
+use Railken\LaraOre\Api\Support\Testing\TestableTrait;
 use Railken\LaraOre\FileGenerator\FileGeneratorFaker;
 use Railken\LaraOre\FileGenerator\FileGeneratorManager;
-use Railken\LaraOre\Support\Testing\ApiTestableTrait;
 
 class ApiTest extends BaseTest
 {
-    use ApiTestableTrait;
+    use TestableTrait;
 
     /**
      * Retrieve basic url.
@@ -18,7 +18,7 @@ class ApiTest extends BaseTest
      */
     public function getBaseUrl()
     {
-        return Config::get('ore.api.router.prefix').Config::get('ore.file-generator.http.admin.router.prefix');
+        return Config::get('ore.api.http.admin.router.prefix').Config::get('ore.file-generator.http.admin.router.prefix');
     }
 
     /**
@@ -38,7 +38,7 @@ class ApiTest extends BaseTest
         $resource = $result->getResource();
 
         $response = $this->post($this->getBaseUrl().'/'.$resource->id.'/generate', ['data' => ['name' => $resource->name]]);
-        $this->assertOrPrint($response, 200);
+        $response->assertStatus(200);
     }
 
     public function testRender()
@@ -56,6 +56,6 @@ class ApiTest extends BaseTest
             'body'            => '{{ name }}',
             'data'            => ['name' => 'ban'],
         ]);
-        $this->assertOrPrint($response, 200);
+        $response->assertStatus(200);
     }
 }

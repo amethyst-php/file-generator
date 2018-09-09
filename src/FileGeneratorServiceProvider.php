@@ -19,8 +19,8 @@ class FileGeneratorServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadRoutes();
 
-        config(['ore.permission.managers' => array_merge(Config::get('ore.permission.managers', []), [
-            // \Railken\LaraOre\FileGenerator\FileGeneratorManager::class,
+        config(['ore.managers' => array_merge(Config::get('ore.managers', []), [
+            \Railken\LaraOre\FileGenerator\FileGeneratorManager::class,
         ])]);
     }
 
