@@ -3,31 +3,34 @@
 namespace Railken\LaraOre\Tests\FileGenerator;
 
 use Illuminate\Support\Facades\Config;
-use Railken\LaraOre\Api\Support\Testing\TestableTrait;
+use Railken\LaraOre\Api\Support\Testing\TestableBaseTrait;
 use Railken\LaraOre\FileGenerator\FileGeneratorFaker;
 use Railken\LaraOre\FileGenerator\FileGeneratorManager;
 
 class ApiTest extends BaseTest
 {
-    use TestableTrait;
+    use TestableBaseTrait;
 
     /**
-     * Retrieve basic url.
+     * Faker class.
      *
-     * @return string
+     * @var string
      */
-    public function getBaseUrl()
-    {
-        return Config::get('ore.api.http.admin.router.prefix').Config::get('ore.file-generator.http.admin.router.prefix');
-    }
+    protected $faker = FileGeneratorFaker::class;
 
     /**
-     * Test common requests.
+     * Router group resource.
+     *
+     * @var string
      */
-    public function testSuccessCommon()
-    {
-        $this->commonTest($this->getBaseUrl(), FileGeneratorFaker::make()->parameters());
-    }
+    protected $group = 'admin';
+
+    /**
+     * Base path config.
+     *
+     * @var string
+     */
+    protected $config = 'ore.file-generator';
 
     public function testGenerate()
     {
@@ -37,7 +40,7 @@ class ApiTest extends BaseTest
         $this->assertEquals(1, $result->ok());
         $resource = $result->getResource();
 
-        $response = $this->post($this->getBaseUrl().'/'.$resource->id.'/generate', ['data' => ['name' => $resource->name]]);
+        $response = $this->post($this->getResourceUrl().'/'.$resource->id.'/generate', ['data' => ['name' => $resource->name]]);
         $response->assertStatus(200);
     }
 
@@ -50,7 +53,7 @@ class ApiTest extends BaseTest
 
         $resource = $result->getResource();
 
-        $response = $this->post($this->getBaseUrl().'/render', [
+        $response = $this->post($this->getResourceUrl().'/render', [
             'data_builder_id' => $resource->data_builder->id,
             'filetype'        => 'text/html',
             'body'            => '{{ name }}',
