@@ -118,6 +118,7 @@ class FileGeneratorManager extends ModelManager
             $bag = new Bag($parameters);
 
             $bag->set('body', $tm->renderRaw($filetype, strval($bag->get('body')), $data));
+            $bag->set('filename', $tm->renderRaw($filetype, strval($bag->get('filename')), $data));
 
             $result->setResources(new Collection([$bag->toArray()]));
         } catch (\Twig_Error $e) {
