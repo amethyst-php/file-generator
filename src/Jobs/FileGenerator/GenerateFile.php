@@ -60,7 +60,7 @@ class GenerateFile implements ShouldQueue
 
         $data = $result->getResource();
         $result = $fgm->render($generator->data_builder, $generator->filetype, [
-            'body'         => $generator->bod,
+            'body'         => $generator->body,
             'filename'     => sys_get_temp_dir().'/'.$generator->filename,
         ], $data);
 
