@@ -1,11 +1,11 @@
 <?php
 
-namespace Railken\LaraOre\Events\FileGenerator;
+namespace Railken\Amethyst\Events\FileGenerator;
 
 use Illuminate\Queue\SerializesModels;
-use Railken\LaraOre\File\File;
-use Railken\LaraOre\FileGenerator\FileGenerator;
-use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Amethyst\Models\File;
+use Railken\Amethyst\Models\FileGenerator;
+use Railken\Lem\Contracts\AgentContract;
 
 class FileGenerated
 {
@@ -18,9 +18,9 @@ class FileGenerated
     /**
      * Create a new event instance.
      *
-     * @param \Railken\LaraOre\FileGenerator\FileGenerator     $generator
-     * @param \Railken\LaraOre\File\File                       $file
-     * @param \Railken\Laravel\Manager\Contracts\AgentContract $agent
+     * @param \Railken\Amethyst\Models\FileGenerator $generator
+     * @param \Railken\Amethyst\Models\File          $file
+     * @param \Railken\Lem\Contracts\AgentContract   $agent
      */
     public function __construct(FileGenerator $generator, File $file, AgentContract $agent = null)
     {

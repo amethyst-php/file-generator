@@ -1,14 +1,14 @@
 <?php
 
-namespace Railken\LaraOre\Http\Controllers\Admin;
+namespace Railken\Amethyst\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
-use Railken\LaraOre\Api\Http\Controllers\RestConfigurableController;
-use Railken\LaraOre\Api\Http\Controllers\Traits as RestTraits;
-use Railken\LaraOre\DataBuilder\DataBuilderManager;
+use Railken\Amethyst\Api\Http\Controllers\RestManagerController;
+use Railken\Amethyst\Api\Http\Controllers\Traits as RestTraits;
+use Railken\Amethyst\Managers\DataBuilderManager;
+use Railken\Amethyst\Managers\FileGeneratorManager;
 
-class FileGeneratorsController extends RestConfigurableController
+class FileGeneratorsController extends RestManagerController
 {
     use RestTraits\RestIndexTrait;
     use RestTraits\RestShowTrait;
@@ -17,43 +17,11 @@ class FileGeneratorsController extends RestConfigurableController
     use RestTraits\RestRemoveTrait;
 
     /**
-     * The config path.
+     * The class of the manager.
      *
      * @var string
      */
-    public $config = 'ore.file-generator';
-
-    /**
-     * The attributes that are queryable.
-     *
-     * @var array
-     */
-    public $queryable = [
-        'id',
-        'name',
-        'description',
-        'data_builder_id',
-        'filename',
-        'filetype',
-        'body',
-        'created_at',
-        'updated_at',
-    ];
-
-    /**
-     * The attributes that are fillable.
-     *
-     * @var array
-     */
-    public $fillable = [
-        'name',
-        'description',
-        'data_builder',
-        'data_builder_id',
-        'filename',
-        'filetype',
-        'body',
-    ];
+    public $class = FileGeneratorManager::class;
 
     /**
      * Generate.
@@ -65,10 +33,10 @@ class FileGeneratorsController extends RestConfigurableController
      */
     public function generate(int $id, Request $request)
     {
-        /** @var \Railken\LaraOre\FileGenerator\FileGeneratorManager */
+        /** @var \Railken\Amethyst\Managers\FileGeneratorManager */
         $manager = $this->manager;
 
-        /** @var \Railken\LaraOre\FileGenerator\FileGenerator */
+        /** @var \Railken\Amethyst\Models\FileGenerator */
         $generator = $manager->getRepository()->findOneById($id);
 
         if ($generator == null) {
@@ -93,12 +61,12 @@ class FileGeneratorsController extends RestConfigurableController
      */
     public function render(Request $request)
     {
-        /** @var \Railken\LaraOre\FileGenerator\FileGeneratorManager */
+        /** @var \Railken\Amethyst\Managers\FileGeneratorManager */
         $manager = $this->manager;
 
         $dbm = new DataBuilderManager();
 
-        /** @var \Railken\LaraOre\DataBuilder\DataBuilder */
+        /** @var \Railken\Amethyst\Models\DataBuilder */
         $data_builder = $dbm->getRepository()->findOneById(intval($request->input('data_builder_id')));
 
         if ($data_builder == null) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Railken\LaraOre\Exceptions;
+namespace Railken\Amethyst\Exceptions;
 
 use Exception;
 

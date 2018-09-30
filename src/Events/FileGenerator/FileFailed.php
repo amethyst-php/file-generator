@@ -1,11 +1,11 @@
 <?php
 
-namespace Railken\LaraOre\Events\FileGenerator;
+namespace Railken\Amethyst\Events\FileGenerator;
 
 use Exception;
 use Illuminate\Queue\SerializesModels;
-use Railken\LaraOre\FileGenerator\FileGenerator;
-use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Amethyst\Models\FileGenerator;
+use Railken\Lem\Contracts\AgentContract;
 
 class FileFailed
 {
@@ -18,9 +18,9 @@ class FileFailed
     /**
      * Create a new event instance.
      *
-     * @param \Railken\LaraOre\FileGenerator\FileGenerator     $generator
-     * @param \Exception                                       $exception
-     * @param \Railken\Laravel\Manager\Contracts\AgentContract $agent
+     * @param \Railken\Amethyst\Models\FileGenerator $generator
+     * @param \Exception                             $exception
+     * @param \Railken\Lem\Contracts\AgentContract   $agent
      */
     public function __construct(FileGenerator $generator, Exception $exception, AgentContract $agent = null)
     {

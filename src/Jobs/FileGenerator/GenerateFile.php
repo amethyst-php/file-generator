@@ -1,21 +1,21 @@
 <?php
 
-namespace Railken\LaraOre\Jobs\FileGenerator;
+namespace Railken\Amethyst\Jobs\FileGenerator;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Railken\Amethyst\Events\FileGenerator\FileFailed;
+use Railken\Amethyst\Events\FileGenerator\FileGenerated;
+use Railken\Amethyst\Managers\DataBuilderManager;
+use Railken\Amethyst\Managers\FileGeneratorManager;
+use Railken\Amethyst\Managers\FileManager;
+use Railken\Amethyst\Managers\TemplateManager;
+use Railken\Amethyst\Models\FileGenerator;
 use Railken\Bag;
-use Railken\LaraOre\DataBuilder\DataBuilderManager;
-use Railken\LaraOre\Events\FileGenerator\FileFailed;
-use Railken\LaraOre\Events\FileGenerator\FileGenerated;
-use Railken\LaraOre\File\FileManager;
-use Railken\LaraOre\FileGenerator\FileGenerator;
-use Railken\LaraOre\FileGenerator\FileGeneratorManager;
-use Railken\LaraOre\Template\TemplateManager;
-use Railken\Laravel\Manager\Contracts\AgentContract;
+use Railken\Lem\Contracts\AgentContract;
 
 class GenerateFile implements ShouldQueue
 {
@@ -28,9 +28,9 @@ class GenerateFile implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param FileGenerator                                    $generator
-     * @param array                                            $data
-     * @param \Railken\Laravel\Manager\Contracts\AgentContract $agent
+     * @param FileGenerator                        $generator
+     * @param array                                $data
+     * @param \Railken\Lem\Contracts\AgentContract $agent
      */
     public function __construct(FileGenerator $generator, array $data = [], AgentContract $agent = null)
     {
