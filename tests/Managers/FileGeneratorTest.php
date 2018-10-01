@@ -30,7 +30,7 @@ class FileGeneratorTest extends BaseTest
     {
         $manager = $this->getManager();
 
-        $result = $manager->create(FileGeneratorFaker::make()->parameters()->set('data_builder.repository.class_name', \Railken\Amethyst\Tests\Repositories\FileGeneratorRepository::class));
+        $result = $manager->create(FileGeneratorFaker::make()->parameters());
         $this->assertEquals(1, $result->ok());
 
         $resource = $result->getResource();
@@ -42,7 +42,7 @@ class FileGeneratorTest extends BaseTest
     {
         $manager = $this->getManager();
 
-        $result = $manager->create(FileGeneratorFaker::make()->parameters()->set('data_builder.repository.class_name', \Railken\Amethyst\Tests\Repositories\FileGeneratorRepository::class));
+        $result = $manager->create(FileGeneratorFaker::make()->parameters());
         $this->assertEquals(1, $result->ok());
 
         $resource = $result->getResource();

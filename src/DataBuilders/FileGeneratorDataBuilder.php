@@ -1,32 +1,51 @@
 <?php
 
-namespace Railken\Amethyst\Tests\Repositories;
+namespace Railken\Amethyst\DataBuilders;
 
 use Closure;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Railken\Amethyst\Contracts\RepositoryContract;
+use Railken\Amethyst\Contracts\DataBuilderContract;
 use Railken\Amethyst\Managers\FileGeneratorManager;
 
-class FileGeneratorRepository implements RepositoryContract
+class FileGeneratorDataBuilder implements DataBuilderContract
 {
+    /**
+     * @var \Railken\Amethyst\Managers\FileGeneratorManager
+     */
     protected $manager;
 
+    /**
+     * Create a new instance.
+     */
     public function __construct()
     {
         $this->manager = new FileGeneratorManager();
     }
 
-    public function newQuery()
+    /**
+     * Create a new instance of the query.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function newQuery(): Builder
     {
         return $this->manager->getRepository()->newQuery();
     }
 
-    public function getTableName()
+    /**
+     * Retrieve the table name.
+     *
+     * @return string
+     */
+    public function getTableName(): string
     {
         return $this->manager->newEntity()->getTable();
     }
 
     /**
+     * Extract a single resource.
+     *
      * @param Collection $resources
      * @param \Closure   $callback
      */
@@ -42,7 +61,7 @@ class FileGeneratorRepository implements RepositoryContract
      *
      * @return Collection
      */
-    public function parse(Collection $resources)
+    public function parse(Collection $resources): Collection
     {
         return ['records' => $resources];
     }
