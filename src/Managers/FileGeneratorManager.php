@@ -3,7 +3,7 @@
 namespace Railken\Amethyst\Managers;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Config;
+use Railken\Amethyst\Common\ConfigurableManager;
 use Railken\Amethyst\Exceptions;
 use Railken\Amethyst\Jobs\FileGenerator\GenerateFile;
 use Railken\Amethyst\Models\DataBuilder;
@@ -14,20 +14,12 @@ use Railken\Lem\Result;
 
 class FileGeneratorManager extends Manager
 {
-    /**
-     * Describe this manager.
-     *
-     * @var string
-     */
-    public $comment = '...';
+    use ConfigurableManager;
 
     /**
-     * Register Classes.
+     * @var string
      */
-    public function registerClasses()
-    {
-        return Config::get('amethyst.file-generator.managers.file-generator');
-    }
+    protected $config = 'amethyst.file-generator.data.file-generator';
 
     /**
      * Request a file-generator.

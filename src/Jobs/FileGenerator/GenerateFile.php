@@ -79,7 +79,6 @@ class GenerateFile implements ShouldQueue
             ->addMedia($bag->get('filename'))
             ->addCustomHeaders([
                 'ContentDisposition' => 'attachment; filename='.basename($bag->get('filename')).'',
-                'ContentType'        => 'text/csv',
             ])
             ->toMediaCollection('file');
 
