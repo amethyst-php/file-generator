@@ -26,11 +26,11 @@ class FileGeneratorTest extends BaseTest
     protected $group = 'admin';
 
     /**
-     * Base path config.
+     * Route name.
      *
      * @var string
      */
-    protected $config = 'amethyst.file-generator.http.admin.file-generator';
+    protected $route = 'admin.file-generator';
 
     public function testGenerate()
     {
@@ -40,7 +40,7 @@ class FileGeneratorTest extends BaseTest
         $this->assertEquals(1, $result->ok());
         $resource = $result->getResource();
 
-        $response = $this->post($this->getResourceUrl().'/'.$resource->id.'/generate', ['data' => ['name' => $resource->name]]);
+        $response = $this->post(route('admin.file-generator.generate', ['id' => $resource->id]), ['data' => ['name' => $resource->name]]);
         $response->assertStatus(200);
     }
 
@@ -53,7 +53,7 @@ class FileGeneratorTest extends BaseTest
 
         $resource = $result->getResource();
 
-        $response = $this->post($this->getResourceUrl().'/render', [
+        $response = $this->post(route('admin.file-generator.render'), [
             'data_builder_id' => $resource->data_builder->id,
             'filetype'        => 'text/html',
             'body'            => '{{ name }}',

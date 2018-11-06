@@ -44,6 +44,23 @@ class GenerateFile implements ShouldQueue
      */
     public function handle()
     {
+        $result = $this->generate();
+        $generator = $this->generator;
+
+        if (!$result->ok()) {
+            event(new FileFailed($generator, $result->getErrors()[0], $this->agent));
+        } else {
+            event(new FileGenerated($generator, $result->getResource(), $this->agent));
+        }
+    }
+
+    /**
+     * Generate a file.
+     *
+     * @return \Railken\Lem\Result
+     */
+    public function generate()
+    {
         $generator = $this->generator;
         $data = $this->data;
 
@@ -64,10 +81,6 @@ class GenerateFile implements ShouldQueue
             'filename'     => sys_get_temp_dir().'/'.$generator->filename,
         ], $data);
 
-        if (!$result->ok()) {
-            return event(new FileFailed($generator, $result->getErrors()[0], $this->agent));
-        }
-
         $bag = new Bag($result->getResource());
 
         file_put_contents($bag->get('filename'), $bag->get('body'));
@@ -82,6 +95,6 @@ class GenerateFile implements ShouldQueue
             ])
             ->toMediaCollection('file');
 
-        event(new FileGenerated($generator, $result->getResource(), $this->agent));
+        return $result;
     }
 }
