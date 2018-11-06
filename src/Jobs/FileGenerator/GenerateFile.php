@@ -72,7 +72,7 @@ class GenerateFile implements ShouldQueue
         $result = $dbm->build($generator->data_builder, $data);
 
         if (!$result->ok()) {
-            return event(new FileFailed($generator, $result->getErrors()[0], $this->agent));
+            return $result;
         }
 
         $data = $result->getResource();
