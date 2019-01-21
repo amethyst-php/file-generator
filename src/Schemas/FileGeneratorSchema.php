@@ -25,8 +25,10 @@ class FileGeneratorSchema extends Schema
             Attributes\BelongsToAttribute::make('data_builder_id')
                 ->setRelationName('data_builder')
                 ->setRelationManager(DataBuilderManager::class),
-            Attributes\TextAttribute::make('filename'),
-            Attributes\EnumAttribute::make('filetype', array_keys(Config::get('amethyst.template.generators'))),
+            Attributes\TextAttribute::make('filename')
+                ->setRequired(true),
+            Attributes\EnumAttribute::make('filetype', array_keys(Config::get('amethyst.template.generators')))
+                ->setRequired(true),
             Attributes\LongTextAttribute::make('body'),
             Attributes\CreatedAtAttribute::make(),
             Attributes\UpdatedAtAttribute::make(),
