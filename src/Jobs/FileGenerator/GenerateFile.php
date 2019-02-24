@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Config;
 use Railken\Amethyst\Events\FileGenerator\FileFailed;
 use Railken\Amethyst\Events\FileGenerator\FileGenerated;
 use Railken\Amethyst\Managers\DataBuilderManager;
@@ -73,6 +74,13 @@ class GenerateFile implements ShouldQueue
 
         if (!$result->ok()) {
             return $result;
+        }
+
+        // Overwrite filename if driver is local
+        $diskName = Config::get('medialibrary.disk_name');
+
+        if (Config::get("filesystems.disks.$diskName.driver", 'local') === 'local') {
+            $generator->filename = bin2hex(random_bytes(32)).'-'.$generator->filename;
         }
 
         $data = $result->getResource();
