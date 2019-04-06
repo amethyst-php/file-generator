@@ -4,4 +4,4 @@ return [
     'name' => 'FileGenerator',
     'description' => 'FileGenerator',
     'attributes' => []
-]
+];
