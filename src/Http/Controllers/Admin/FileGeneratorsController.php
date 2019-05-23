@@ -24,14 +24,14 @@ class FileGeneratorsController extends RestManagerController
     public $class = FileGeneratorManager::class;
 
     /**
-     * Generate.
+     * Execute.
      *
      * @param int                      $id
      * @param \Illuminate\Http\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function generate(int $id, Request $request)
+    public function execute(int $id, Request $request)
     {
         /** @var \Railken\Amethyst\Managers\FileGeneratorManager */
         $manager = $this->manager;
