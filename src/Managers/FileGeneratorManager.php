@@ -75,4 +75,21 @@ class FileGeneratorManager extends Manager
 
         return $result;
     }
+
+    /**
+     * Describe extra actions.
+     *
+     * @return array
+     */
+    public function getDescriptor()
+    {
+        return [
+            'components' => [
+                'renderer',
+            ],
+            'actions' => [
+                'executor',
+            ],
+        ];
+    }
 }
