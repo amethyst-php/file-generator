@@ -43,7 +43,7 @@ class FileGeneratorsController extends RestManagerController
             return $this->not_found();
         }
 
-        $result = $manager->generate($generator, (array) $request->input('data'));
+        $result = $manager->execute($generator, (array) $request->input('data'));
 
         if (!$result->ok()) {
             return $this->error(['errors' => $result->getSimpleErrors()]);

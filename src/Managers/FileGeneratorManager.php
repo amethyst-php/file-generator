@@ -29,7 +29,7 @@ class FileGeneratorManager extends Manager
      *
      * @return \Railken\Lem\Contracts\ResultContract
      */
-    public function generate(FileGenerator $generator, array $data = [])
+    public function execute(FileGenerator $generator, array $data = [])
     {
         $result = (new DataBuilderManager())->validateRaw($generator->data_builder, $data);
 
