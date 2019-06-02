@@ -29,7 +29,7 @@ class FileGeneratorSchema extends Schema
                 ->setRequired(true),
             Attributes\EnumAttribute::make('filetype', array_keys(Config::get('amethyst.template.generators')))
                 ->setRequired(true),
-            Attributes\LongTextAttribute::make('body'),
+            Attributes\HtmlAttribute::make('body'),
             Attributes\CreatedAtAttribute::make(),
             Attributes\UpdatedAtAttribute::make(),
             Attributes\DeletedAtAttribute::make(),
