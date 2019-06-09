@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'name' => 'FileGenerator',
-    'description' => 'FileGenerator',
+    'name' => 'File Generator',
+    'description' => 'File Generator',
     'attributes' => []
 ];
