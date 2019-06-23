@@ -34,7 +34,7 @@ class FileGeneratorTest extends BaseTest
         $this->assertEquals(1, $result->ok());
 
         $resource = $result->getResource();
-        $result = $manager->generate($resource, ['name' => $resource->name]);
+        $result = $manager->execute($resource, ['name' => $resource->name]);
         $this->assertEquals(true, $result->ok());
     }
 

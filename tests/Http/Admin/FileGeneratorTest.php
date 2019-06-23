@@ -40,7 +40,7 @@ class FileGeneratorTest extends BaseTest
         $this->assertEquals(1, $result->ok());
         $resource = $result->getResource();
 
-        $response = $this->post(route('admin.file-generator.generate', ['id' => $resource->id]), ['data' => ['name' => $resource->name]]);
+        $response = $this->post(route('admin.file-generator.execute', ['id' => $resource->id]), ['data' => ['name' => $resource->name]]);
         $response->assertStatus(200);
     }
 
