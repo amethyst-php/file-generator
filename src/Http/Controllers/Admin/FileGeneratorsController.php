@@ -1,12 +1,12 @@
 <?php
 
-namespace Railken\Amethyst\Http\Controllers\Admin;
+namespace Amethyst\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use Railken\Amethyst\Api\Http\Controllers\RestManagerController;
-use Railken\Amethyst\Api\Http\Controllers\Traits as RestTraits;
-use Railken\Amethyst\Managers\DataBuilderManager;
-use Railken\Amethyst\Managers\FileGeneratorManager;
+use Amethyst\Api\Http\Controllers\RestManagerController;
+use Amethyst\Api\Http\Controllers\Traits as RestTraits;
+use Amethyst\Managers\DataBuilderManager;
+use Amethyst\Managers\FileGeneratorManager;
 
 class FileGeneratorsController extends RestManagerController
 {
@@ -33,10 +33,10 @@ class FileGeneratorsController extends RestManagerController
      */
     public function execute(int $id, Request $request)
     {
-        /** @var \Railken\Amethyst\Managers\FileGeneratorManager */
+        /** @var \Amethyst\Managers\FileGeneratorManager */
         $manager = $this->manager;
 
-        /** @var \Railken\Amethyst\Models\FileGenerator */
+        /** @var \Amethyst\Models\FileGenerator */
         $generator = $manager->getRepository()->findOneById($id);
 
         if ($generator == null) {
@@ -61,12 +61,12 @@ class FileGeneratorsController extends RestManagerController
      */
     public function render(Request $request)
     {
-        /** @var \Railken\Amethyst\Managers\FileGeneratorManager */
+        /** @var \Amethyst\Managers\FileGeneratorManager */
         $manager = $this->manager;
 
         $dbm = new DataBuilderManager();
 
-        /** @var \Railken\Amethyst\Models\DataBuilder */
+        /** @var \Amethyst\Models\DataBuilder */
         $data_builder = $dbm->getRepository()->findOneById(intval($request->input('data_builder_id')));
 
         if ($data_builder == null) {

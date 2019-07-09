@@ -1,6 +1,6 @@
 <?php
 
-namespace Railken\Amethyst\Tests;
+namespace Amethyst\Tests;
 
 use Illuminate\Support\Facades\File;
 
@@ -23,7 +23,7 @@ abstract class BaseTest extends \Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Railken\Amethyst\Providers\FileGeneratorServiceProvider::class,
+            \Amethyst\Providers\FileGeneratorServiceProvider::class,
         ];
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Railken\Amethyst\Events\FileGenerator;
+namespace Amethyst\Events\FileGenerator;
 
 use Exception;
 use Illuminate\Queue\SerializesModels;
-use Railken\Amethyst\Models\FileGenerator;
+use Amethyst\Models\FileGenerator;
 use Railken\Lem\Contracts\AgentContract;
 
 class FileFailed
@@ -18,7 +18,7 @@ class FileFailed
     /**
      * Create a new event instance.
      *
-     * @param \Railken\Amethyst\Models\FileGenerator $generator
+     * @param \Amethyst\Models\FileGenerator $generator
      * @param \Exception                             $exception
      * @param \Railken\Lem\Contracts\AgentContract   $agent
      */

@@ -1,11 +1,11 @@
 <?php
 
-namespace Railken\Amethyst\Providers;
+namespace Amethyst\Providers;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
-use Railken\Amethyst\Api\Support\Router;
-use Railken\Amethyst\Common\CommonServiceProvider;
+use Amethyst\Api\Support\Router;
+use Amethyst\Common\CommonServiceProvider;
 
 class FileGeneratorServiceProvider extends CommonServiceProvider
 {
@@ -17,9 +17,9 @@ class FileGeneratorServiceProvider extends CommonServiceProvider
         parent::register();
         $this->loadExtraRoutes();
 
-        $this->app->register(\Railken\Amethyst\Providers\DataBuilderServiceProvider::class);
-        $this->app->register(\Railken\Amethyst\Providers\TemplateServiceProvider::class);
-        $this->app->register(\Railken\Amethyst\Providers\FileServiceProvider::class);
+        $this->app->register(\Amethyst\Providers\DataBuilderServiceProvider::class);
+        $this->app->register(\Amethyst\Providers\TemplateServiceProvider::class);
+        $this->app->register(\Amethyst\Providers\FileServiceProvider::class);
         $this->app->register(\Railken\Template\TemplateServiceProvider::class);
     }
 

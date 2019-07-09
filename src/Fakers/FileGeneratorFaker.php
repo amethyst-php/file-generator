@@ -1,9 +1,9 @@
 <?php
 
-namespace Railken\Amethyst\Fakers;
+namespace Amethyst\Fakers;
 
 use Faker\Factory;
-use Railken\Amethyst\DataBuilders\FileGeneratorDataBuilder;
+use Amethyst\DataBuilders\FileGeneratorDataBuilder;
 use Railken\Bag;
 use Railken\Lem\Faker;
 

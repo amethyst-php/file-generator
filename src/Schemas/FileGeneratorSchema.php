@@ -1,9 +1,9 @@
 <?php
 
-namespace Railken\Amethyst\Schemas;
+namespace Amethyst\Schemas;
 
 use Illuminate\Support\Facades\Config;
-use Railken\Amethyst\Managers\DataBuilderManager;
+use Amethyst\Managers\DataBuilderManager;
 use Railken\Lem\Attributes;
 use Railken\Lem\Schema;
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace Railken\Amethyst\Managers;
+namespace Amethyst\Managers;
 
 use Illuminate\Support\Collection;
-use Railken\Amethyst\Common\ConfigurableManager;
-use Railken\Amethyst\Exceptions;
-use Railken\Amethyst\Jobs\FileGenerator\GenerateFile;
-use Railken\Amethyst\Models\DataBuilder;
-use Railken\Amethyst\Models\FileGenerator;
+use Amethyst\Common\ConfigurableManager;
+use Amethyst\Exceptions;
+use Amethyst\Jobs\FileGenerator\GenerateFile;
+use Amethyst\Models\DataBuilder;
+use Amethyst\Models\FileGenerator;
 use Railken\Bag;
 use Railken\Lem\Manager;
 use Railken\Lem\Result;

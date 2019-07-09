@@ -1,11 +1,11 @@
 <?php
 
-namespace Railken\Amethyst\Tests\Managers;
+namespace Amethyst\Tests\Managers;
 
-use Railken\Amethyst\Fakers\FileGeneratorFaker;
-use Railken\Amethyst\Managers\DataBuilderManager;
-use Railken\Amethyst\Managers\FileGeneratorManager;
-use Railken\Amethyst\Tests\BaseTest;
+use Amethyst\Fakers\FileGeneratorFaker;
+use Amethyst\Managers\DataBuilderManager;
+use Amethyst\Managers\FileGeneratorManager;
+use Amethyst\Tests\BaseTest;
 use Railken\Lem\Support\Testing\TestableBaseTrait;
 
 class FileGeneratorTest extends BaseTest
