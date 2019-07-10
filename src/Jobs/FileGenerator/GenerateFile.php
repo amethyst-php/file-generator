@@ -2,12 +2,6 @@
 
 namespace Amethyst\Jobs\FileGenerator;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Config;
 use Amethyst\Events\FileGenerator\FileFailed;
 use Amethyst\Events\FileGenerator\FileGenerated;
 use Amethyst\Managers\DataBuilderManager;
@@ -15,6 +9,12 @@ use Amethyst\Managers\FileGeneratorManager;
 use Amethyst\Managers\FileManager;
 use Amethyst\Managers\TemplateManager;
 use Amethyst\Models\FileGenerator;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Config;
 use Railken\Bag;
 use Railken\Lem\Contracts\AgentContract;
 

@@ -2,8 +2,8 @@
 
 namespace Amethyst\Fakers;
 
-use Faker\Factory;
 use Amethyst\DataBuilders\FileGeneratorDataBuilder;
+use Faker\Factory;
 use Railken\Bag;
 use Railken\Lem\Faker;
 

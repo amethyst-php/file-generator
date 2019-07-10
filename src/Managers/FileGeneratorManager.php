@@ -2,12 +2,12 @@
 
 namespace Amethyst\Managers;
 
-use Illuminate\Support\Collection;
 use Amethyst\Common\ConfigurableManager;
 use Amethyst\Exceptions;
 use Amethyst\Jobs\FileGenerator\GenerateFile;
 use Amethyst\Models\DataBuilder;
 use Amethyst\Models\FileGenerator;
+use Illuminate\Support\Collection;
 use Railken\Bag;
 use Railken\Lem\Manager;
 use Railken\Lem\Result;
