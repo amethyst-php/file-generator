@@ -12,6 +12,14 @@ use Railken\Bag;
 use Railken\Lem\Manager;
 use Railken\Lem\Result;
 
+/**
+ * @method \Amethyst\Models\FileGenerator newEntity()
+ * @method \Amethyst\Schemas\FileGeneratorSchema getSchema()
+ * @method \Amethyst\Repositories\FileGeneratorRepository getRepository()
+ * @method \Amethyst\Serializers\FileGeneratorSerializer getSerializer()
+ * @method \Amethyst\Validators\FileGeneratorValidator getValidator()
+ * @method \Amethyst\Authorizers\FileGeneratorAuthorizer getAuthorizer()
+ */
 class FileGeneratorManager extends Manager
 {
     use ConfigurableManager;
