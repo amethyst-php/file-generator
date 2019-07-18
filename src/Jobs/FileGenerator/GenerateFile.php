@@ -96,7 +96,7 @@ class GenerateFile implements ShouldQueue
 
         file_put_contents($bag->get('filename'), $bag->get('body'));
 
-        $result = $fm->create([]);
+        $result = $fm->create(['name' => basename($bag->get('filename'))]);
         $resource = $result->getResource();
 
         $resource
