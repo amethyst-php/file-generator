@@ -56,6 +56,8 @@ class GenerateFile implements ShouldQueue
         } else {
             event(new FileGenerated($generator, $result->getResource(), $this->agent));
         }
+
+        return $result;
     }
 
     /**
@@ -92,6 +94,10 @@ class GenerateFile implements ShouldQueue
             'filename' => sys_get_temp_dir().'/'.$generator->filename,
         ], $data);
 
+        if (!$result->ok()) {
+            return $result;
+        }
+        
         $bag = new Bag($result->getResource());
 
         file_put_contents($bag->get('filename'), $bag->get('body'));
