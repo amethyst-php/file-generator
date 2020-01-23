@@ -20,7 +20,7 @@ class CreateFileGeneratorsTable extends Migration
             $table->foreign('data_builder_id')->references('id')->on(Config::get('amethyst.data-builder.data.data-builder.table'));
             $table->string('filename');
             $table->string('filetype');
-            $table->text('body')->nullable();
+            $table->longText('body')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
