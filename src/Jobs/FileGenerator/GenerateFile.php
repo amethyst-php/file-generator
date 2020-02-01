@@ -97,7 +97,7 @@ class GenerateFile implements ShouldQueue
         if (!$result->ok()) {
             return $result;
         }
-        
+
         $bag = new Bag($result->getResource());
 
         file_put_contents($bag->get('filename'), $bag->get('body'));
