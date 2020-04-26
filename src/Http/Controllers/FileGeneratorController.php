@@ -3,9 +3,7 @@
 namespace Amethyst\Http\Controllers;
 
 use Amethyst\Core\Http\Controllers\RestManagerController;
-use Amethyst\Core\Http\Controllers\Traits as RestTraits;
 use Amethyst\Managers\DataBuilderManager;
-use Amethyst\Managers\FileGeneratorManager;
 use Illuminate\Http\Request;
 
 class FileGeneratorController extends RestManagerController
