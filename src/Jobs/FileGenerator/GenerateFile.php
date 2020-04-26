@@ -54,7 +54,7 @@ class GenerateFile implements ShouldQueue
         if (!$result->ok()) {
             event(new FileFailed($generator, $result->getErrors()[0], $this->agent));
         } else {
-            event(new FileGenerated($generator, $result->getResource(), $this->agent));
+            event(new FileGenerated($generator, $result->getResource(), $this->agent, $this->data));
         }
 
         return $result;

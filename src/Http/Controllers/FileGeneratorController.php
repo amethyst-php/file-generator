@@ -1,6 +1,6 @@
 <?php
 
-namespace Amethyst\Http\Controllers\Admin;
+namespace Amethyst\Http\Controllers;
 
 use Amethyst\Core\Http\Controllers\RestManagerController;
 use Amethyst\Core\Http\Controllers\Traits as RestTraits;
@@ -8,20 +8,12 @@ use Amethyst\Managers\DataBuilderManager;
 use Amethyst\Managers\FileGeneratorManager;
 use Illuminate\Http\Request;
 
-class FileGeneratorsController extends RestManagerController
+class FileGeneratorController extends RestManagerController
 {
-    use RestTraits\RestIndexTrait;
-    use RestTraits\RestShowTrait;
-    use RestTraits\RestCreateTrait;
-    use RestTraits\RestUpdateTrait;
-    use RestTraits\RestRemoveTrait;
-
-    /**
-     * The class of the manager.
-     *
-     * @var string
-     */
-    public $class = FileGeneratorManager::class;
+    public function __construct()
+    {
+        $this->manager = app('amethyst')->get('file-generator');
+    }
 
     /**
      * Execute.
@@ -40,7 +32,7 @@ class FileGeneratorsController extends RestManagerController
         $generator = $manager->getRepository()->findOneById($id);
 
         if ($generator == null) {
-            return $this->not_found();
+            abort(404);
         }
 
         $result = $manager->execute($generator, (array) $request->input('data'));
